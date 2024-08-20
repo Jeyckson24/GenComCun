@@ -40,7 +40,9 @@ app.get('/buscar-datos', (req, res) => {
 });
 
 app.post('/generate-doc', (req, res) => {
-    const { cedula, nombre, cargo, dia, mes, ano, destino, motivo, viaticos } = req.body;
+    const { cedula, nombres, apellidos, cargo, dia, mes, ano, destino, motivo, viaticos=null } = req.body;
+    
+    if (viaticos!=null){
 
     const doc = new Document({
         sections: [
@@ -48,37 +50,120 @@ app.post('/generate-doc', (req, res) => {
                 children: [
                     new Paragraph({
                         children: [
-                            new TextRun({ text: `RESOLUCIÓN No. [CODE]`, bold: true, size: 22 }),
+                            new TextRun({ text: `RESOLUCIÓN No. [CODE]`,font:'Arial', bold: true, size: 22 }),
                             new TextRun({ break: 1 }),
-                            new TextRun({ text: `[DATE-L]`, bold: true, size: 22 }),
-                            new TextRun({ break: 1 }),
-                            new TextRun({ break: 1 }),
-                            new TextRun({ text: `Por la cual se confiere una comisión de servicios`, bold: true, size: 22 }),
+                            new TextRun({ text: `[DATE-L]`,font:'Arial', bold: true, size: 22 }),
                             new TextRun({ break: 1 }),
                             new TextRun({ break: 1 }),
-                            new TextRun({ text: `EL DIRECTOR SECCIONAL DE ADMINISTRACIÓN JUDICIAL DE CUNDINAMARCA - AMAZONAS`, bold: true, size: 22 }),
+                            new TextRun({ text: `Por la cual se confiere una comisión de servicios`,font:'Arial', bold: true, size: 22 }),
                             new TextRun({ break: 1 }),
                             new TextRun({ break: 1 }),
-                            new TextRun({ text: `En ejercicio de sus facultades legales estatutarias...`, bold: true, size: 22 }),
+                            new TextRun({ text: `EL DIRECTOR SECCIONAL DE ADMINISTRACIÓN JUDICIAL DE CUNDINAMARCA - AMAZONAS`,font:'Arial', bold: true, size: 22 }),
                             new TextRun({ break: 1 }),
-                            new TextRun({ text: `CONSIDERANDO:`, bold: true, size: 22 }),
+                            new TextRun({ break: 1 }),
+                            new TextRun({ text: `En ejercicio de sus facultades legales estatutarias y en especial de las conferidas por el artículo 103 de la Ley 270 de 1.996,`, font:'Arial', bold: true, size: 22 }),
+                            new TextRun({ break: 1 }),
+                            new TextRun({ break: 1 }),
+                            new TextRun({ text: `CONSIDERANDO:`,font:'Arial', bold: true, size: 22 }),
                             new TextRun({ break: 1 }),
                         ],
                         alignment: AlignmentType.CENTER,
                     }),
                     new Paragraph({
-                        text: `Que en mi calidad de DIRECTOR SECCIONAL... ${nombre}, identificado con cédula de ciudadanía No. ${cedula}, quien desempeña el cargo de ${cargo}, para que se traslade el día ${dia} de ${mes} de ${ano} al municipio de ${destino}, con el fin de realizar ${motivo}.`,
-                        size: 22,
+                        children: [
+
+                            new TextRun({ text:`Que en mi calidad de DIRECTOR SECCIONAL DE ADMINISTRACIÓN JUDICIAL DE CUNDINAMARCA – AMAZONAS, autorizo comisión de servicios al señor ${nombres} ${apellidos}, identificado con cédula de ciudadanía No. ${cedula}, quien desempeña el cargo de ${cargo}, para que se traslade el día ${dia} de ${mes} de ${ano} al municipio de ${destino}, con el fin de realizar ${motivo}.`,font:'Arial', size: 22,}),
+                        ],
+                        alignment: AlignmentType.JUSTIFIED,
                     }),
                     new Paragraph({
                         children: [
                             new TextRun({ break: 1 }),
-                            new TextRun({ text: `Que el suscrito encuentra viable...`, bold: true, size: 22 }),
+                            new TextRun({ text: `Que el suscrito encuentra viable conceder la comisión peticionada con base en lo dispuesto por el Art. 136 de la Ley 270 de 1996 y Art. 61 del Decreto 1042 de 1978.`,font:'Arial', size: 22 }),
                             new TextRun({ break: 1 }),
-                            new TextRun({ text: `En mérito a lo expuesto, este Despacho.`, bold: true, size: 22 }),
+                            new TextRun({ break: 1 }),
+                            new TextRun({ text: `En mérito a lo expuesto, este Despacho.`,font:'Arial', size: 22 }),
                             new TextRun({ break: 1 }),
                         ],
                     }),
+
+                    new Paragraph({
+                        children: [
+                            new TextRun({ break: 1 }),
+                            new TextRun({ text: `R E S U E L V E:`,font:'Arial',bold: true, size: 22 }),
+                            new TextRun({ break: 1 }),
+                        
+                        
+                        ],
+                    alignment: AlignmentType.CENTER,
+                    }),        
+                    new Paragraph({
+                            children: [
+
+                            new TextRun({ text: `ARTICULO PRIMERO:`,font:'Arial', bold: true, size: 22 }),
+                            new TextRun({ text: ` Comisionar al señor ${nombres} ${apellidos} identificado con cédula de ciudadanía No. ${cedula}, quien desempeña el cargo de ${cargo}, para que se traslade el día ${dia} de ${mes} de ${ano} al municipio de ${destino}, de conformidad con lo expuesto en la parte motiva de esta Resolución.`,font:'Arial', size: 22 }),
+                            new TextRun({ break: 1 }),
+                            
+                        ],
+                        alignment: AlignmentType.JUSTIFIED,
+                    }),
+
+                    new Paragraph({
+                        children: [
+                        new TextRun({ text: `ARTICULO SEGUNDO:`,font:'Arial', bold: true, size: 22 }),
+                        new TextRun({ text: ` La presente comisión no genera pago de viáticos, pero si gastos de transporte intermunicipal con cargo al CDP No. 624 del 10 de enero de 2024.`,font:'Arial', size: 22 }),
+                        new TextRun({ break: 1 }),
+                        
+                    ],
+                    alignment: AlignmentType.JUSTIFIED,
+                    }),
+
+                    new Paragraph({
+                        children: [
+                        new TextRun({ text: `ARTICULO TERCERO:`,font:'Arial', bold: true, size: 22 }),
+                        new TextRun({ text: ` La presente Resolución rige a partir de la fecha de su expedición.`,font:'Arial',  size: 22 }),
+                        new TextRun({ break: 1 }),
+                        
+                    ],
+                    alignment: AlignmentType.JUSTIFIED,
+                    }),
+
+                    new Paragraph({
+                        children: [
+                            new TextRun({ break: 1 }),
+                            new TextRun({ text: `COMUNÍQUESE Y CÚMPLASE`,font:'Arial', bold: true, size: 22 }),
+                            new TextRun({ break: 1 }),
+                        
+                        
+                        ],
+                    alignment: AlignmentType.CENTER,
+                    }), 
+
+                    new Paragraph({
+                        children: [
+                        new TextRun({ text: ` Dada en Bogotá, el [DATE-L]`,font:'Arial',  size: 22 }),
+                        new TextRun({ break: 1 }),
+                        new TextRun({ break: 1 }),
+                        new TextRun({ break: 1 }),
+                        new TextRun({ break: 1 }),
+                        new TextRun({ break: 1 }),
+                        
+                    ],
+                    }),
+                    new Paragraph({
+                        children: [
+                            new TextRun({ break: 1 }),
+                            new TextRun({ text: `CARLOS ALBERTO ROCHA MARTÍNEZ`,font:'Arial',bold: true, size: 22 }),
+                            new TextRun({ break: 1 }),
+                            new TextRun({ text: `Director Seccional de Administración Judicial de Cundinamarca – Amazonas`,font:'Arial', size: 22 }),
+                            new TextRun({ break: 1 }),
+                        
+                        
+                        ],
+                    alignment: AlignmentType.CENTER,
+                    }), 
+
+                
                     viaticos ? new Paragraph({
                         text: `Se generarán viáticos para este traslado.`,
                         size: 22,
@@ -105,6 +190,148 @@ app.post('/generate-doc', (req, res) => {
         console.error("Error al generar el documento:", err);
         res.status(500).send("Error al generar el documento.");
     });
+}
+
+else{
+    const doc = new Document({
+        sections: [
+            {
+                children: [
+                    new Paragraph({
+                        children: [
+                            new TextRun({ text: `RESOLUCIÓN No. [CODE]`,font:'Arial', bold: true, size: 22 }),
+                            new TextRun({ break: 1 }),
+                            new TextRun({ text: `[DATE-L]`,font:'Arial', bold: true, size: 22 }),
+                            new TextRun({ break: 1 }),
+                            new TextRun({ break: 1 }),
+                            new TextRun({ text: `Por la cual se confiere una comisión de servicios`,font:'Arial', bold: true, size: 22 }),
+                            new TextRun({ break: 1 }),
+                            new TextRun({ break: 1 }),
+                            new TextRun({ text: `EL DIRECTOR SECCIONAL DE ADMINISTRACIÓN JUDICIAL DE CUNDINAMARCA - AMAZONAS`,font:'Arial', bold: true, size: 22 }),
+                            new TextRun({ break: 1 }),
+                            new TextRun({ break: 1 }),
+                            new TextRun({ text: `En ejercicio de sus facultades legales estatutarias y en especial de las conferidas por el artículo 103 de la Ley 270 de 1.996,`, font:'Arial', bold: true, size: 22 }),
+                            new TextRun({ break: 1 }),
+                            new TextRun({ break: 1 }),
+                            new TextRun({ text: `CONSIDERANDO:`,font:'Arial', bold: true, size: 22 }),
+                            new TextRun({ break: 1 }),
+                        ],
+                        alignment: AlignmentType.CENTER,
+                    }),
+                    new Paragraph({
+                        children: [
+
+                            new TextRun({ text:`Que en mi calidad de DIRECTOR SECCIONAL DE ADMINISTRACIÓN JUDICIAL DE CUNDINAMARCA – AMAZONAS, autorizo comisión de servicios al señor ${nombres} ${apellidos}, identificado con cédula de ciudadanía No. ${cedula}, quien desempeña el cargo de ${cargo}, para que se traslade el día ${dia} de ${mes} de ${ano} al municipio de ${destino}, con el fin de realizar ${motivo}.`,font:'Arial', size: 22,}),
+                        ],
+                        alignment: AlignmentType.JUSTIFIED,
+                    }),
+                    new Paragraph({
+                        children: [
+                            new TextRun({ break: 1 }),
+                            new TextRun({ text: `Que el suscrito encuentra viable conceder la comisión peticionada con base en lo dispuesto por el Art. 136 de la Ley 270 de 1996 y Art. 61 del Decreto 1042 de 1978.`,font:'Arial', size: 22 }),
+                            new TextRun({ break: 1 }),
+                            new TextRun({ break: 1 }),
+                            new TextRun({ text: `En mérito a lo expuesto, este Despacho.`,font:'Arial', size: 22 }),
+                            new TextRun({ break: 1 }),
+                        ],
+                    }),
+
+                    new Paragraph({
+                        children: [
+                            new TextRun({ break: 1 }),
+                            new TextRun({ text: `R E S U E L V E:`,font:'Arial',bold: true, size: 22 }),
+                            new TextRun({ break: 1 }),
+                        
+                        
+                        ],
+                    alignment: AlignmentType.CENTER,
+                    }),        
+                    new Paragraph({
+                            children: [
+
+                            new TextRun({ text: `ARTICULO PRIMERO:`,font:'Arial', bold: true, size: 22 }),
+                            new TextRun({ text: ` Comisionar al señor ${nombres} ${apellidos} identificado con cédula de ciudadanía No. ${cedula}, quien desempeña el cargo de ${cargo}, para que se traslade el día ${dia} de ${mes} de ${ano} al municipio de ${destino}, de conformidad con lo expuesto en la parte motiva de esta Resolución.`,font:'Arial', size: 22 }),
+                            new TextRun({ break: 1 }),
+                            
+                        ],
+                        alignment: AlignmentType.JUSTIFIED,
+                    }),
+
+                    new Paragraph({
+                        children: [
+                        new TextRun({ text: `ARTICULO SEGUNDO:`,font:'Arial', bold: true, size: 22 }),
+                        new TextRun({ text: ` La presente comisión no genera pago de viáticos, ni de desplazamiento.`,font:'Arial', size: 22 }),
+                        new TextRun({ break: 1 }),
+                        
+                    ],
+                    alignment: AlignmentType.JUSTIFIED,
+                    }),
+
+                    new Paragraph({
+                        children: [
+                        new TextRun({ text: `ARTICULO TERCERO:`,font:'Arial', bold: true, size: 22 }),
+                        new TextRun({ text: ` La presente Resolución rige a partir de la fecha de su expedición.`,font:'Arial',  size: 22 }),
+                        new TextRun({ break: 1 }),
+                        
+                    ],
+                    alignment: AlignmentType.JUSTIFIED,
+                    }),
+
+                    new Paragraph({
+                        children: [
+                            new TextRun({ break: 1 }),
+                            new TextRun({ text: `COMUNÍQUESE Y CÚMPLASE`,font:'Arial', bold: true, size: 22 }),
+                            new TextRun({ break: 1 }),
+                        
+                        
+                        ],
+                    alignment: AlignmentType.CENTER,
+                    }), 
+
+                    new Paragraph({
+                        children: [
+                        new TextRun({ text: ` Dada en Bogotá, el [DATE-L]`,font:'Arial',  size: 22 }),
+                        new TextRun({ break: 1 }),
+                        new TextRun({ break: 1 }),
+                        new TextRun({ break: 1 }),
+                        new TextRun({ break: 1 }),
+                        new TextRun({ break: 1 }),
+                        
+                    ],
+                    }),
+                    new Paragraph({
+                        children: [
+                            new TextRun({ break: 1 }),
+                            new TextRun({ text: `CARLOS ALBERTO ROCHA MARTÍNEZ`,font:'Arial',bold: true, size: 22 }),
+                            new TextRun({ break: 1 }),
+                            new TextRun({ text: `Director Seccional de Administración Judicial de Cundinamarca – Amazonas`,font:'Arial', size: 22 }),
+                            new TextRun({ break: 1 }),
+                        
+                        
+                        ],
+                    alignment: AlignmentType.CENTER,
+                    }), 
+                ],
+            },
+        ],
+    });
+
+    const fileName = `certificado_${cedula}.docx`;
+
+    Packer.toBuffer(doc).then((buffer) => {
+        const filePath = path.join(__dirname, fileName);
+        fs.writeFileSync(filePath, buffer);
+        res.download(filePath, fileName, (err) => {
+            if (err) {
+                console.log(err);
+            }
+            fs.unlinkSync(filePath);
+        });
+    }).catch(err => {
+        console.error("Error al generar el documento:", err);
+        res.status(500).send("Error al generar el documento.");
+    });
+}
 });
 
 app.listen(port, () => {

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <title>Generar Documento</title>
@@ -10,13 +10,16 @@
         <input type="text" id="cedula" name="cedula"><br>
         <button type="button" onclick="buscarDatos()">Buscar</button><br><br>
 
-        <label for="nombre">Nombre Completo:</label><br>
-        <input type="text" id="nombre" name="nombre"><br><br>
+        <label for="nombres">Nombres:</label><br>
+        <input type="text" id="nombres" name="nombres"><br><br>
+
+        <label for="apellidos">Apellidos:</label><br>
+        <input type="text" id="apellidos" name="apellidos"><br><br>
 
         <label for="cargo">Cargo:</label><br>
         <input type="text" id="cargo" name="cargo"><br><br>
 
-        <label for="dia">Día:</label><br>
+        <label for="dia">Dia:</label><br>
         <input type="text" id="dia" name="dia"><br><br>
 
         <label for="mes">Mes:</label><br>
@@ -45,13 +48,9 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data) {
-                        document.getElementById('nombre').value = data.fullName;
+                        document.getElementById('nombres').value = data.nombres;
+                        document.getElementById('apellidos').value = data.apellidos;
                         document.getElementById('cargo').value = data.cargo;
-                        document.getElementById('dia').value = data.dia;
-                        document.getElementById('mes').value = data.mes;
-                        document.getElementById('ano').value = data.ano;
-                        document.getElementById('destino').value = data.destino;
-                        document.getElementById('motivo').value = data.motivo;
                         
                         // Puedes completar los demás campos de forma similar
                     } else {
